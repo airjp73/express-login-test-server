@@ -2,10 +2,9 @@
 
 var chai = require('chai')
 var expect = chai.expect
-var sinon = require('sinon')
 
 var express = require('express')
-var router = require('./authRouter.js')
+var authRouter = require('./authRouter.js')
 
 describe("authRouter", () => {
   it("should export an express router", () => {
