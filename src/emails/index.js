@@ -1,5 +1,4 @@
 var nodemailer = require('nodemailer')
-var Email = require('email-templates')
 var path = require('path')
 
 var transporter = nodemailer.createTransport({
