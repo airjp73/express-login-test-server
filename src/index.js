@@ -15,6 +15,9 @@ require('env2')(__dirname + "/.env")
 var userModel = require('./models/user.js')
 var emailOptions = require('./emails')
 
+//express-login
+var expressLogin = require('express-login')
+var expressLoginLocal = require('express-login-local')
 
 /*
   Express configuration
@@ -50,11 +53,11 @@ var authOptions = {
   userModel,
   emailOptions
 }
-var expressLogin = require("../src")(authOptions)
-var authRouter = require("./authRouter.js")(expressLogin)
+expressLogin.use(expressLoginLocal)
+//var authRouter = require("./authRouter.js")(expressLogin)
 
 app.use("/auth", expressLogin.router)
-app.use("/test", authRouter)
+//app.use("/test", authRouter)
 
 app.use((err, req, res, next) => {
   console.log(err)
