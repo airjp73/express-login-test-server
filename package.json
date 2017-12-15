@@ -1,0 +1,28 @@
+{
+  "name": "express-login-test-server",
+  "version": "1.0.0",
+  "description": "Test server for express-login package",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airjp73/express-login-test-server.git"
+  },
+  "author": "Aaron Pettengill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/airjp73/express-login-test-server/issues"
+  },
+  "homepage": "https://github.com/airjp73/express-login-test-server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "express-login": "git+https://github.com/airjp73/express-login.git#split-strategies",
+    "mongoose": "^4.13.7"
+  }
+}
