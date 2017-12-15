@@ -20,10 +20,12 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
+    "email-templates": "^3.1.8",
     "express": "^4.16.2",
     "express-login": "git+https://github.com/airjp73/express-login.git#split-strategies",
     "express-session": "^1.15.6",
-    "mongoose": "^4.13.7"
+    "mongoose": "^4.13.7",
+    "nodemailer": "^4.4.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
