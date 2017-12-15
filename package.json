@@ -4,7 +4,7 @@
   "description": "Test server for express-login package",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha 'src/**/*.spec.js'",
     "start": "node src"
   },
   "repository": {
@@ -24,5 +24,10 @@
     "express-login": "git+https://github.com/airjp73/express-login.git#split-strategies",
     "express-session": "^1.15.6",
     "mongoose": "^4.13.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "sinon": "^4.1.3"
   }
 }
