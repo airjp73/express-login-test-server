@@ -20,6 +20,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
+    "env2": "^2.2.0",
     "express": "^4.16.2",
     "express-login": "git+https://github.com/airjp73/express-login.git#split-strategies",
     "express-login-local": "git+https://github.com/airjp73/express-login-local.git",
