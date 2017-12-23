@@ -15,10 +15,6 @@ require('env2')(__dirname + "/.env")
 var userModel = require('./models/user.js')
 var emailOptions = require('./emails')
 
-//express-login
-var expressLogin = require('express-login')
-var expressLoginLocal = require('express-login-local')
-
 /*
   Express configuration
 */
@@ -53,6 +49,11 @@ var authOptions = {
   userModel,
   emailOptions
 }
+
+//express-login
+var expressLogin = require('express-login')(authOptions)
+var expressLoginLocal = require('express-login-local')
+
 expressLogin.use(expressLoginLocal)
 //var authRouter = require("./authRouter.js")(expressLogin)
 
@@ -70,6 +71,11 @@ app.use((err, req, res, next) => {
   Start listening
 */
 var port = process.env.AUTH_TEST_PORT || 3000
-module.exports = app.listen(port, function() {
+var server = app.listen(port, function() {
   console.log("Listening on port " + port)
 })
+
+module.exports = {
+  server,
+  expressLogin
+}
