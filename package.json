@@ -22,7 +22,7 @@
     "cookie-parser": "^1.4.3",
     "env2": "^2.2.0",
     "express": "^4.16.2",
-    "express-login": "git+https://github.com/airjp73/express-login.git#split-strategies",
+    "express-login": "git+https://github.com/airjp73/express-login.git",
     "express-login-local": "git+https://github.com/airjp73/express-login-local.git",
     "express-session": "^1.15.6",
     "mongoose": "^4.13.7",
