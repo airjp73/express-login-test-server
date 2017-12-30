@@ -9,6 +9,7 @@ chai.use(chaiHttp)
 var expect = chai.expect
 var sinon = require('sinon')
 var mongoose = require('mongoose')
+var bcrypt = require('bcrypt-nodejs')
 
 var User   = require('./models/user.js')
 var {server, expressLogin} = require('./index.js')
@@ -28,26 +29,20 @@ const TEST_USER = {
 var mockUser = async () => {
   var testUser = new User()
   testUser.email = TEST_USER.email
-  testUser.password = expressLogin.config.encrypt.hashPassword(TEST_USER.password)
+  testUser.password = bcrypt.hashSync(TEST_USER.password, bcrypt.genSaltSync(8), null)
   testUser.confirmEmailToken = TEST_USER.confirmEmailToken
   testUser.emailConfirmed = false
   return await testUser.save()
 }
-var mail = {}
+var mail = require('./emails/mockMailer').sendEmail
 
 
 
 describe('route testing', () => {
-  before(() => {
-    mail = sinon.stub(expressLogin.config.mailer, "sendEmail")
-  })
   beforeEach(async () => {
     mail.reset()
     await User.collection.remove({email: TEST_USER.email})
     agent = chai.request.agent(server)
-  })
-  after(() => {
-    mail.restore()
   })
 
   ////////////////////////////////////////////////////////////////////////////
@@ -226,8 +221,8 @@ describe('route testing', () => {
 
       await agent.post("/auth/changePassword").send(fields)
 
-      var user = await expressLogin.config.database.getUser({email:TEST_USER.email}, ["email", "password"])
-      var passChanged = expressLogin.config.encrypt.matchPassword(TEST_USER.newPassword, user.password)
+      var user = await User.findOne({email:TEST_USER.email}, "email password")
+      var passChanged = bcrypt.compareSync(TEST_USER.newPassword, user.password)
       expect(passChanged).to.be.true
 
       sinon.assert.calledOnce(mail)
@@ -272,7 +267,7 @@ describe('route testing', () => {
       var res = await agent.post("/auth/forgotPassword").send(fields)
       expect(res).to.have.status(200)
 
-      var user = await expressLogin.config.database.getUser({email:TEST_USER.email}, ["resetPasswordToken", "resetPasswordExpires"])
+      var user = await User.findOne({email:TEST_USER.email}, "resetPasswordToken resetPasswordExpires")
       expect(user.resetPasswordToken).to.exist
       expect(user.resetPasswordExpires).to.exist
 
@@ -313,8 +308,8 @@ describe('route testing', () => {
       var res = await agent.post("/auth/resetPassword").send(fields)
       expect(res).to.have.status(200)
 
-      user = await expressLogin.config.database.getUser({_id: user.id}, ["password"])
-      expect(expressLogin.config.encrypt.matchPassword(TEST_USER.newPassword, user.password)).to.be.true
+      user = await User.findOne({_id: user.id}, "password")
+      expect(bcrypt.compareSync(TEST_USER.newPassword, user.password)).to.be.true
       sinon.assert.calledOnce(mail)
       expect(mail.args[0][0]).to.equal("passwordChanged")
       expect(mail.args[0][1]).to.equal(TEST_USER.email)
@@ -335,8 +330,8 @@ describe('route testing', () => {
       var res = await agent.post("/auth/resetPassword").send(fields)
       expect(res).to.have.status(403)
 
-      user = await expressLogin.config.database.getUser({_id: user.id}, ["password"])
-      expect(expressLogin.config.encrypt.matchPassword(TEST_USER.password, user.password)).to.be.true
+      user = await User.findOne({_id: user.id}, "password")
+      expect(bcrypt.compareSync(TEST_USER.password, user.password)).to.be.true
       sinon.assert.notCalled(mail)
     })
 
