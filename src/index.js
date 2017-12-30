@@ -51,13 +51,13 @@ var authOptions = {
 }
 
 //express-login
-var expressLogin = require('express-login')(authOptions)
+var expressLogin = require('express-login')
 var expressLoginLocal = require('express-login-local')
 
-expressLogin.use(expressLoginLocal)
+expressLogin.useStrategy(expressLoginLocal)
 //var authRouter = require("./authRouter.js")(expressLogin)
 
-app.use("/auth", expressLogin.router)
+app.use("/auth", expressLogin(authOptions))
 //app.use("/test", authRouter)
 
 app.use((err, req, res, next) => {
