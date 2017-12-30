@@ -4,7 +4,7 @@
   "description": "Test server for express-login package",
   "main": "server.js",
   "scripts": {
-    "test": "mocha 'src/**/*.spec.js' --exit",
+    "test": "mocha src/**/*.spec.js --exit",
     "start": "node src"
   },
   "repository": {

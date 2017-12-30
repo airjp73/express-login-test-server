@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
 
 var emailOptions = {
   views: {
-    root: "/src"
+    root: __dirname
   },
   message: {
     from: "AaronP <aaron@bob.com>"
