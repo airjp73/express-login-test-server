@@ -55,13 +55,13 @@ var expressLogin = require('express-login')
 var expressLoginLocal = require('express-login-local')
 
 expressLogin.useStrategy(expressLoginLocal)
-//var authRouter = require("./authRouter.js")(expressLogin)
+var authRouter = require("./authRouter.js")(expressLogin)
 
 if(process.env.AUTH_TESTING)
   expressLogin.useMailer(require('./emails/mockMailer'))
 
 app.use("/auth", expressLogin(authOptions))
-//app.use("/test", authRouter)
+app.use("/test", authRouter)
 
 app.use((err, req, res, next) => {
   console.log(err)
