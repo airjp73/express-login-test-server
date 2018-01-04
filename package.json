@@ -23,8 +23,8 @@
     "cookie-parser": "^1.4.3",
     "env2": "^2.2.0",
     "express": "^4.16.2",
-    "express-login": "file:../express-login",
-    "express-login-local": "file:../express-login-local",
+    "express-reuse": "file:../express-login",
+    "express-reuse-local-login": "file:../express-login-local",
     "express-session": "^1.15.6",
     "mongoose": "^4.13.7",
     "nodemailer": "^4.4.1"
