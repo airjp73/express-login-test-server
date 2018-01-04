@@ -51,8 +51,8 @@ var authOptions = {
 }
 
 //express-login
-var expressLogin = require('express-login')
-var expressLoginLocal = require('express-login-local')
+var expressLogin = require('express-reuse')
+var expressLoginLocal = require('express-reuse-local-login')
 
 expressLogin.useStrategy(expressLoginLocal)
 var authRouter = require("./authRouter.js")(expressLogin)
